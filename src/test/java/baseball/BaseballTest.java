@@ -41,7 +41,6 @@ class BaseballTest {
 	private List<Integer> getCorrect(Baseball baseball) throws NoSuchFieldException, IllegalAccessException {
 		Field field = baseball.getClass().getDeclaredField("correct");
 		field.setAccessible(true);
-		List<Integer> correct = (List<Integer>)field.get(baseball);
-		return correct;
+		return (List<Integer>)field.get(baseball);
 	}
 }

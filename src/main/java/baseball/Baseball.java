@@ -14,13 +14,27 @@ public class Baseball {
 	private boolean playing = true;
 
 	private Baseball() {
-		this.correct = Collections.unmodifiableList(
-			Randoms.pickUniqueNumbersInRange(1, 9, 3)
-		);
+		List<Integer> list = generateUniqueRandomNumbers();
+		this.correct = Collections.unmodifiableList(list);
 	}
 
 	public static Baseball newGame() {
 		return new Baseball();
+	}
+
+	private List<Integer> generateUniqueRandomNumbers() {
+		List<Integer> list = new ArrayList<>();
+		while (list.size() != 3) {
+			addRandomNumber(list);
+		}
+		return list;
+	}
+
+	private void addRandomNumber(List<Integer> list) {
+		int i = Randoms.pickNumberInRange(1, 9);
+		if (!list.contains(i)) {
+			list.add(i);
+		}
 	}
 
 	public boolean isPlaying() {
@@ -48,7 +62,7 @@ public class Baseball {
 
 	private void validateInput(String input) {
 		if (!inputPattern.matcher(input).matches()) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(input);
 		}
 	}
 }
