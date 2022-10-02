@@ -1,5 +1,6 @@
 package baseball;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -28,19 +29,26 @@ public class Baseball {
 
 	public String query(String input) {
 		validateInput(input);
-		if (collect(input)) {
+		List<Integer> numberInput = convertInput(input);
+		Result result = Result.generate(correct, numberInput);
+
+		if (result.isCorrect()) {
 			this.playing = false;
 		}
-		return "string";
+		return result.getResultMessage();
+	}
+
+	private List<Integer> convertInput(String input) {
+		List<Integer> list = new ArrayList<>();
+		for (String s : input.split("")) {
+			list.add(Integer.parseInt(s));
+		}
+		return list;
 	}
 
 	private void validateInput(String input) {
 		if (!inputPattern.matcher(input).matches()) {
 			throw new IllegalArgumentException();
 		}
-	}
-
-	private boolean collect(String input) {
-		return input.equals("123");
 	}
 }
