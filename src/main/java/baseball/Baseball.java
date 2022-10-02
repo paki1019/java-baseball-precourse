@@ -1,15 +1,26 @@
 package baseball;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
-public class Baseball {
-	private static final Pattern inputPattern;
+import camp.nextstep.edu.missionutils.Randoms;
 
-	static {
-		inputPattern = Pattern.compile("^[1-9]{3}$");
+public class Baseball {
+	private static final Pattern inputPattern = Pattern.compile("^[1-9]{3}$");
+
+	private final List<Integer> correct;
+	private boolean playing = true;
+
+	private Baseball() {
+		this.correct = Collections.unmodifiableList(
+			Randoms.pickUniqueNumbersInRange(1, 9, 3)
+		);
 	}
 
-	private boolean playing = true;
+	public static Baseball newGame() {
+		return new Baseball();
+	}
 
 	public boolean isPlaying() {
 		return playing;

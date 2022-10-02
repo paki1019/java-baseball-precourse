@@ -14,7 +14,7 @@ public class Application {
 	}
 
 	private static void playBaseballGame() {
-		Baseball baseball = new Baseball();
+		Baseball baseball = Baseball.newGame();
 		while (baseball.isPlaying()) {
 			System.out.print("숫자를 입력해주세요 : ");
 			String input = Console.readLine();
