@@ -11,7 +11,7 @@ public class Result {
 	private int strikeCount;
 	private int ballCount;
 
-	public Result(List<Integer> correct, List<Integer> input) {
+	private Result(List<Integer> correct, List<Integer> input) {
 		this.correct = Collections.unmodifiableList(correct);
 		this.input = Collections.unmodifiableList(input);
 		setResultCount();
@@ -45,6 +45,15 @@ public class Result {
 	}
 
 	public String getResultMessage() {
-		return null;
+		if (this.ballCount != 0 && this.strikeCount != 0) {
+			return String.format("%d볼 %d스트라이크", this.ballCount, this.strikeCount);
+		}
+		if (this.ballCount != 0) {
+			return String.format("%d볼", this.ballCount);
+		}
+		if (this.strikeCount != 0) {
+			return String.format("%d스트라이크", this.strikeCount);
+		}
+		return "낫싱";
 	}
 }

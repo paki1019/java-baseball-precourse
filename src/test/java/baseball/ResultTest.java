@@ -39,6 +39,16 @@ class ResultTest {
 		);
 	}
 
+	static Stream<Arguments> getResultMessageData() {
+		return Stream.of(
+			Arguments.of(Arrays.asList(1, 2, 3), Arrays.asList(1, 2, 3), "3스트라이크"),
+			Arguments.of(Arrays.asList(1, 2, 3), Arrays.asList(2, 1, 4), "2볼"),
+			Arguments.of(Arrays.asList(3, 4, 5), Arrays.asList(3, 5, 4), "2볼 1스트라이크"),
+			Arguments.of(Arrays.asList(4, 9, 6), Arrays.asList(9, 9, 9), "2볼 1스트라이크"),
+			Arguments.of(Arrays.asList(4, 9, 6), Arrays.asList(0, 0, 0), "낫싱")
+		);
+	}
+
 	@DisplayName("결과 여부 테스트")
 	@ParameterizedTest
 	@MethodSource("isCorrectData")
@@ -50,7 +60,7 @@ class ResultTest {
 	@DisplayName("스트라이크 갯수 테스트")
 	@ParameterizedTest
 	@MethodSource("getStrikeData")
-	void getStrikeData(List<Integer> correct, List<Integer> input, int expected) throws
+	void strikeCount(List<Integer> correct, List<Integer> input, int expected) throws
 		NoSuchFieldException, IllegalAccessException {
 		Result result = Result.generate(correct, input);
 		assertThat(getFieldValue(result, "strikeCount")).isEqualTo(expected);
@@ -59,7 +69,7 @@ class ResultTest {
 	@DisplayName("볼 갯수 테스트")
 	@ParameterizedTest
 	@MethodSource("getBallData")
-	void getBallData(List<Integer> correct, List<Integer> input, int expected) throws
+	void ballCount(List<Integer> correct, List<Integer> input, int expected) throws
 		NoSuchFieldException, IllegalAccessException {
 		Result result = Result.generate(correct, input);
 		assertThat(getFieldValue(result, "ballCount")).isEqualTo(expected);
@@ -69,5 +79,13 @@ class ResultTest {
 		Field field = object.getClass().getDeclaredField(fieldName);
 		field.setAccessible(true);
 		return (int)field.get(object);
+	}
+
+	@DisplayName("")
+	@ParameterizedTest
+	@MethodSource("getResultMessageData")
+	void getResultMessageD(List<Integer> correct, List<Integer> input, String expected) {
+		Result result = Result.generate(correct, input);
+		assertThat(result.getResultMessage()).isEqualTo(expected);
 	}
 }
