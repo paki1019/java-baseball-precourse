@@ -14,11 +14,15 @@ public class Result {
 	private Result(List<Integer> correct, List<Integer> input) {
 		this.correct = Collections.unmodifiableList(correct);
 		this.input = Collections.unmodifiableList(input);
-		setResultCount();
+		checkResult();
 	}
 
-	private void setResultCount() {
-		for (int i = 0; i< input.size(); i++) {
+	public static Result generate(List<Integer> correct, List<Integer> input) {
+		return new Result(correct, input);
+	}
+
+	private void checkResult() {
+		for (int i = 0; i < input.size(); i++) {
 			addResultCount(i, input.get(i));
 		}
 	}
@@ -28,20 +32,13 @@ public class Result {
 			strikeCount++;
 			return;
 		}
-
 		if (correct.contains(number)) {
 			ballCount++;
-			return;
 		}
-		return;
-	}
-
-	public static Result generate(List<Integer> correct, List<Integer> input) {
-		return new Result(correct, input);
 	}
 
 	public boolean isCorrect() {
-		return strikeCount == 3;
+		return strikeCount == correct.size();
 	}
 
 	public String getResultMessage() {
