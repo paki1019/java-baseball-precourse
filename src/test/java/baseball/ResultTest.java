@@ -13,7 +13,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class ResultTest {
-
 	static Stream<Arguments> isCorrectData() {
 		return Stream.of(
 			Arguments.of(Arrays.asList(1, 2, 3), Arrays.asList(1, 2, 3), true),
@@ -22,7 +21,7 @@ class ResultTest {
 		);
 	}
 
-	static Stream<Arguments> getStrikeData() {
+	static Stream<Arguments> strikeCountData() {
 		return Stream.of(
 			Arguments.of(Arrays.asList(1, 2, 3), Arrays.asList(1, 2, 3), 3),
 			Arguments.of(Arrays.asList(1, 2, 3), Arrays.asList(1, 2, 4), 2),
@@ -30,7 +29,7 @@ class ResultTest {
 		);
 	}
 
-	static Stream<Arguments> getBallData() {
+	static Stream<Arguments> ballCountData() {
 		return Stream.of(
 			Arguments.of(Arrays.asList(1, 2, 3), Arrays.asList(1, 2, 3), 0),
 			Arguments.of(Arrays.asList(1, 2, 3), Arrays.asList(2, 1, 4), 2),
@@ -59,7 +58,7 @@ class ResultTest {
 
 	@DisplayName("스트라이크 갯수 테스트")
 	@ParameterizedTest
-	@MethodSource("getStrikeData")
+	@MethodSource("strikeCountData")
 	void strikeCount(List<Integer> correct, List<Integer> input, int expected) throws
 		NoSuchFieldException, IllegalAccessException {
 		Result result = Result.generate(correct, input);
@@ -68,7 +67,7 @@ class ResultTest {
 
 	@DisplayName("볼 갯수 테스트")
 	@ParameterizedTest
-	@MethodSource("getBallData")
+	@MethodSource("ballCountData")
 	void ballCount(List<Integer> correct, List<Integer> input, int expected) throws
 		NoSuchFieldException, IllegalAccessException {
 		Result result = Result.generate(correct, input);
@@ -81,10 +80,10 @@ class ResultTest {
 		return (int)field.get(object);
 	}
 
-	@DisplayName("")
+	@DisplayName("결과 메시지 반환 테스트")
 	@ParameterizedTest
 	@MethodSource("getResultMessageData")
-	void getResultMessageD(List<Integer> correct, List<Integer> input, String expected) {
+	void getResultMessage(List<Integer> correct, List<Integer> input, String expected) {
 		Result result = Result.generate(correct, input);
 		assertThat(result.getResultMessage()).isEqualTo(expected);
 	}

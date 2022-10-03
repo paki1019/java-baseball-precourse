@@ -23,6 +23,16 @@ class BaseballTest {
 			.isInstanceOf(IllegalArgumentException.class);
 	}
 
+	@DisplayName("정상 입력 테스트")
+	@ParameterizedTest
+	@ValueSource(strings = {"123", "456", "789", "159", "679"})
+	void query(String input) {
+		Baseball baseball = Baseball.newGame();
+		String actual = baseball.query(input);
+		assertThat(actual).containsAnyOf("3스트라이크", "2스트라이크", "1스트라이크", "3볼", "2볼", "2볼 1스트라이크", "1볼",
+			"1볼 1스트라이크", "1볼 2스트라이크", "낫싱");
+	}
+
 	@DisplayName("정답 랜덤 숫자 세팅")
 	@Test
 	void correct_setting() throws IllegalAccessException, NoSuchFieldException {
